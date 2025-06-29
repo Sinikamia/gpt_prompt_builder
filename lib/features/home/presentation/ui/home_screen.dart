@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gpt_prompt_builder/constants/prompt_category.dart';
 import 'package:gpt_prompt_builder/features/home/presentation/ui/widgets/button_category_prompts.dart';
-import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_home_screen.dart';
+import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_universal.dart';
 import 'package:gpt_prompt_builder/shared/widgets/button/button_search.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,7 +12,11 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF1C1C1E),
-      appBar: AppBarHomeScreen(text: 'Генератор промптов', onTap: () {}),
+      appBar: AppBarUniversal(
+        text: 'Генератор промптов',
+        icon: Icons.person,
+        onTap: () {},
+      ),
       body: Column(
         children: [
           SizedBox(height: 5),

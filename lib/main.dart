@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gpt_prompt_builder/features/history/presentation/ui/history_screen.dart';
 import 'package:gpt_prompt_builder/features/home/presentation/ui/home_screen.dart';
+import 'package:gpt_prompt_builder/features/settings/presentation/ui/settings_screen.dart';
 import 'package:gpt_prompt_builder/shared/widgets/bottom_navigation_bar/bottom_navigation_bar_main.dart';
 
 void main() {
@@ -56,8 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> get screens => [
     HomeScreen(controller: _controller),
-    Center(child: Text('История', style: TextStyle(color: Colors.white))),
-    Center(child: Text('Настройки', style: TextStyle(color: Colors.white))),
+    HistoryScreen(),
+    SettingsScreen(),
   ];
 
   @override
