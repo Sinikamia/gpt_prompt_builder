@@ -5,12 +5,14 @@ class AppBarUniversal extends StatelessWidget implements PreferredSizeWidget {
   final String text;
   final IconData? icon;
   final bool showBottomLine;
+  final Function()? onPressed;
   const AppBarUniversal({
     super.key,
     this.onTap,
     required this.text,
     this.icon,
     this.showBottomLine = false,
+    this.onPressed,
   });
 
   @override
@@ -30,10 +32,42 @@ class AppBarUniversal extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Column(
-            children: [
-              icon != null
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+          child:
+              onPressed != null
+                  ? Row(
+                    children: [
+                      InkWell(
+                        onTap: onPressed,
+                        child: const Icon(
+                          Icons.arrow_back_ios_new_outlined,
+                          color: Colors.white70,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      icon != null
+                          ? Row(
+                            children: [
+                              Text(text, style: myStyle),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: InkWell(
+                                    onTap: onTap,
+                                    child: Icon(
+                                      icon,
+                                      color: Colors.white70,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                          : Center(child: Text(text, style: myStyle)),
+                    ],
+                  )
+                  : icon != null
                   ? Row(
                     children: [
                       Text(text, style: myStyle),
@@ -49,8 +83,6 @@ class AppBarUniversal extends StatelessWidget implements PreferredSizeWidget {
                     ],
                   )
                   : Center(child: Text(text, style: myStyle)),
-            ],
-          ),
         ),
       ),
     );

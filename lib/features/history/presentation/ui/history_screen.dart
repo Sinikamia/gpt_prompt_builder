@@ -19,7 +19,7 @@ class HistoryScreen extends StatelessWidget {
               child: SizedBox(
                 width: 70,
                 height: 70,
-                child: Image.asset('assets/box.png', fit: BoxFit.cover),
+                child: Image.asset('assets/box_white_1.png', fit: BoxFit.cover),
               ),
             ),
             const SizedBox(height: 20),

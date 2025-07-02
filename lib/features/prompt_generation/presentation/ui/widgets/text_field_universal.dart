@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+
+class TextFieldUniversal extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  final String hintText;
+  const TextFieldUniversal({
+    super.key,
+    required this.icon,
+    required this.text,
+    required this.hintText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    const myStyle = TextStyle(
+      color: Colors.white70,
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+    );
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0), // padding(.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: Colors.white70),
+              const SizedBox(width: 10),
+              Text(text, style: myStyle),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFF1C1C1E),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              border: Border.all(color: Colors.white24, width: 1),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 5.0,
+              ), // padding(8.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  fillColor: Colors.white,
+                  hintText: hintText,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

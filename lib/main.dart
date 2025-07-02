@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gpt_prompt_builder/features/history/presentation/ui/history_screen.dart';
 import 'package:gpt_prompt_builder/features/home/presentation/ui/home_screen.dart';
+import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/prompt_generation_screen.dart';
 import 'package:gpt_prompt_builder/features/settings/presentation/ui/settings_screen.dart';
 import 'package:gpt_prompt_builder/shared/widgets/bottom_navigation_bar/bottom_navigation_bar_main.dart';
 
@@ -57,7 +58,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Widget> get screens => [
-    HomeScreen(controller: _controller),
+    HomeScreen(
+      controller: _controller,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PromptGenerationScreen()),
+        );
+      },
+    ),
     HistoryScreen(),
     SettingsScreen(),
   ];

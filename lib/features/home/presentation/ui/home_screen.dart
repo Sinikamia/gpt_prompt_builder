@@ -6,7 +6,8 @@ import 'package:gpt_prompt_builder/shared/widgets/button/button_search.dart';
 
 class HomeScreen extends StatelessWidget {
   final TextEditingController controller;
-  const HomeScreen({super.key, required this.controller});
+  final Function() onTap;
+  const HomeScreen({super.key, required this.controller, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -36,23 +37,19 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Expanded(
-                            child: ButtonCategoryPrompts(
-                              text: promptCategories[firstIndex].category,
-                              icon: promptCategories[firstIndex].icon,
-                              onTap: () {},
-                            ),
+                          ButtonCategoryPrompts(
+                            text: promptCategories[firstIndex].category,
+                            icon: promptCategories[firstIndex].icon,
+                            onTap: onTap,
                           ),
                           if (secondIndex < promptCategories.length)
-                            Expanded(
-                              child: ButtonCategoryPrompts(
-                                text: promptCategories[secondIndex].category,
-                                icon: promptCategories[secondIndex].icon,
-                                onTap: () {},
-                              ),
+                            ButtonCategoryPrompts(
+                              text: promptCategories[secondIndex].category,
+                              icon: promptCategories[secondIndex].icon,
+                              onTap: onTap,
                             )
                           else
-                            const Expanded(child: SizedBox()),
+                            SizedBox(),
                         ],
                       ),
                     ],

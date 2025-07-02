@@ -19,7 +19,7 @@ class ButtonCategoryPrompts extends StatelessWidget {
       fontWeight: FontWeight.w600,
     );
     double width = MediaQuery.of(context).size.width;
-    double widthButton = (width - 50) / 2;
+    double widthButton = (width - 60) / 2;
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: SizedBox(
@@ -27,7 +27,7 @@ class ButtonCategoryPrompts extends StatelessWidget {
         height: 85,
         child: InkWell(
           borderRadius: BorderRadius.circular(16.0),
-          onTap: () {},
+          onTap: onTap,
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.white24, width: 2),
