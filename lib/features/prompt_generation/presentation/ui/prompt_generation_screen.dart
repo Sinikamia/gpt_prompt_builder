@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/button_prompt_generation.dart';
+import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/category_universal.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/text_field_universal.dart';
 import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_universal.dart';
 
-class PromptGenerationScreen extends StatelessWidget {
-  const PromptGenerationScreen({super.key});
+class PromptGenerationScreen extends StatefulWidget {
+  final String selectedCategory;
+  const PromptGenerationScreen({super.key, required this.selectedCategory});
 
+  @override
+  State<PromptGenerationScreen> createState() => _PromptGenerationScreenState();
+}
+
+class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,22 +31,34 @@ class PromptGenerationScreen extends StatelessWidget {
             TextFieldUniversal(
               text: 'Шаблон промпта',
               icon: Icons.description_outlined,
-              hintText: 'Введите название промпта',
+              hintText:
+                  'Пример: Я хочу, чтобы ты выступал как автор писем. Твоя задача — написать письмо на основе того, что я предоставлю, чтобы чётко выразить мои мысли. Мой первый запрос: [Подсказка к промпту]',
             ),
             TextFieldUniversal(
               text: 'Описание',
               icon: Icons.edit_note,
-              hintText: 'Введите описание промпта',
+              hintText: 'Пример: Сделай письмо более профессиональным',
             ),
             TextFieldUniversal(
               text: 'Подсказка к промпту',
               icon: Icons.tips_and_updates_outlined,
-              hintText: 'Введите параметры промпта',
+              hintText: 'Пример: Тема вашего письма',
             ),
             TextFieldUniversal(
               text: 'Название промпта',
               icon: Icons.drive_file_rename_outline,
-              hintText: 'Введите пример промпта',
+              hintText: 'Пример: Лучший шаблон письма',
+            ),
+            SizedBox(height: 20),
+            CategoryUniversal(
+              text: 'Категория',
+              textCategory: 'Категория',
+              onTap: () {},
+            ),
+            CategoryUniversal(
+              text: 'Подкатегория',
+              textCategory: 'Подкатегория',
+              onTap: () {},
             ),
             SizedBox(height: 20),
             ButtonPromptGeneration(text: 'Сгенерировать промпт', onTap: () {}),

@@ -21,6 +21,7 @@ class TextFieldUniversal extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0), // padding(.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -31,21 +32,28 @@ class TextFieldUniversal extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Container(
+            width: double.infinity,
             decoration: BoxDecoration(
               color: const Color(0xFF1C1C1E),
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               border: Border.all(color: Colors.white24, width: 1),
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10.0,
-                vertical: 5.0,
-              ), // padding(8.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Colors.white,
-                  hintText: hintText,
+            child: TextField(
+              maxLines: null,
+              minLines: 1,
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                isCollapsed: true,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                  vertical: 10.0,
+                ),
+                border: InputBorder.none,
+                hintText: hintText,
+                hintStyle: const TextStyle(
+                  color: Colors.white54,
+                  fontSize: 16,
+                  overflow: TextOverflow.visible,
                 ),
               ),
             ),
