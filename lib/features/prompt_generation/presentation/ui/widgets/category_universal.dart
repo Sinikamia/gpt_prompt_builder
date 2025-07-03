@@ -4,11 +4,13 @@ class CategoryUniversal extends StatelessWidget {
   final String text;
   final Function() onTap;
   final String textCategory;
+  final IconData icon;
   const CategoryUniversal({
     super.key,
     required this.text,
     required this.onTap,
     required this.textCategory,
+    required this.icon,
   });
 
   @override
@@ -50,7 +52,7 @@ class CategoryUniversal extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: onTap,
-                      child: Icon(Icons.arrow_drop_down, color: Colors.white70),
+                      child: Icon(icon, color: Colors.white70),
                     ),
                   ],
                 ),

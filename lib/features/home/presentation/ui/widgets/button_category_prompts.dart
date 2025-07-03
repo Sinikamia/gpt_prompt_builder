@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ButtonCategoryPrompts extends StatelessWidget {
   final String text;
-  final Function() onTap;
+  final void Function(String) onTap;
   final IconData icon;
   const ButtonCategoryPrompts({
     super.key,
@@ -27,7 +27,7 @@ class ButtonCategoryPrompts extends StatelessWidget {
         height: 85,
         child: InkWell(
           borderRadius: BorderRadius.circular(16.0),
-          onTap: onTap,
+          onTap: () => onTap(text),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.white24, width: 2),

@@ -60,10 +60,14 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Widget> get screens => [
     HomeScreen(
       controller: _controller,
-      onTap: () {
+      onTap: (selectedCategory) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PromptGenerationScreen()),
+          MaterialPageRoute(
+            builder:
+                (context) =>
+                    PromptGenerationScreen(selectedCategory: selectedCategory),
+          ),
         );
       },
     ),

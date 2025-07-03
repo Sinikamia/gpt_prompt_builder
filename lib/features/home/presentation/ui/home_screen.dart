@@ -6,7 +6,7 @@ import 'package:gpt_prompt_builder/shared/widgets/button/button_search.dart';
 
 class HomeScreen extends StatelessWidget {
   final TextEditingController controller;
-  final Function() onTap;
+  final void Function(String category) onTap;
   const HomeScreen({super.key, required this.controller, required this.onTap});
 
   @override
