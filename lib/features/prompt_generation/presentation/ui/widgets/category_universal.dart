@@ -25,7 +25,7 @@ class CategoryUniversal extends StatelessWidget {
       child: Row(
         children: [
           Text(text, style: myStyle),
-          SizedBox(width: 20),
+          SizedBox(width: 10),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -33,28 +33,29 @@ class CategoryUniversal extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 border: Border.all(color: Colors.white24, width: 1),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  vertical: 5.0,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        textCategory,
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+              child: InkWell(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                onTap: onTap,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                    vertical: 5.0,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          textCategory,
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: onTap,
-                      child: Icon(icon, color: Colors.white70),
-                    ),
-                  ],
+                      Icon(icon, color: Colors.white70),
+                    ],
+                  ),
                 ),
               ),
             ),

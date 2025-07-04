@@ -2,314 +2,154 @@ import 'package:gpt_prompt_builder/features/prompt_generation/domain/models/prom
 
 List<PromptSubCategory> subCategories = <PromptSubCategory>[
   // 1. Общие
-  PromptSubCategory(category: 'Общие', subCategory: "Повседневные задачи"),
-  PromptSubCategory(category: 'Общие', subCategory: "Организация времени"),
-  PromptSubCategory(category: 'Общие', subCategory: "Лайфхаки и советы"),
-  PromptSubCategory(category: 'Общие', subCategory: "Мотивация и психология"),
-  PromptSubCategory(category: 'Общие', subCategory: "Коммуникация и общение"),
-  PromptSubCategory(category: 'Общие', subCategory: "Новости и тренды"),
   PromptSubCategory(
     category: 'Общие',
-    subCategory: "Советы по здоровью и фитнесу",
+    subCategory: [
+      "Повседневные задачи",
+      "Организация времени",
+      "Лайфхаки и советы",
+      "Мотивация и психология",
+      "Коммуникация и общение",
+      "Новости и тренды",
+      "Советы по здоровью и фитнесу",
+      "Управление финансами",
+      "Творчество и вдохновение",
+    ],
   ),
-  PromptSubCategory(category: 'Общие', subCategory: "Управление финансами"),
-  PromptSubCategory(category: 'Общие', subCategory: "Творчество и вдохновение"),
-
   // 2. Креатив и тексты
   PromptSubCategory(
     category: 'Креатив и тексты',
-    subCategory: "Написание статей и блогов",
-  ),
-  PromptSubCategory(
-    category: 'Креатив и тексты',
-    subCategory: "Сценарии и рассказы",
-  ),
-  PromptSubCategory(
-    category: 'Креатив и тексты',
-    subCategory: "Поэзия и лирика",
-  ),
-  PromptSubCategory(
-    category: 'Креатив и тексты',
-    subCategory: "Рекламные тексты и слоганы",
-  ),
-  PromptSubCategory(category: 'Креатив и тексты', subCategory: "Копирайтинг"),
-  PromptSubCategory(
-    category: 'Креатив и тексты',
-    subCategory: "Редактирование и корректура",
-  ),
-  PromptSubCategory(
-    category: 'Креатив и тексты',
-    subCategory: "Креативные задания и игры",
-  ),
-  PromptSubCategory(
-    category: 'Креатив и тексты',
-    subCategory: "Создание мемов и шуток",
-  ),
-  PromptSubCategory(
-    category: 'Креатив и тексты',
-    subCategory: "Креативное мышление",
-  ),
-  PromptSubCategory(
-    category: 'Креатив и тексты',
-    subCategory: "Контент для соцсетей",
+    subCategory: [
+      "Написание статей и блогов",
+      "Сценарии и рассказы",
+      "Поэзия и лирика",
+      "Рекламные тексты и слоганы",
+      "Копирайтинг",
+      "Редактирование и корректура",
+      "Креативные задания и игры",
+      "Создание мемов и шуток",
+      "Креативное мышление",
+      "Контент для соцсетей",
+    ],
   ),
 
   // 3. ИИ и технологии
   PromptSubCategory(
     category: 'ИИ и технологии',
-    subCategory: "Машинное обучение",
-  ),
-  PromptSubCategory(
-    category: 'ИИ и технологии',
-    subCategory: "Нейросети и глубокое обучение",
-  ),
-  PromptSubCategory(category: 'ИИ и технологии', subCategory: "Робототехника"),
-  PromptSubCategory(
-    category: 'ИИ и технологии',
-    subCategory: "Обработка естественного языка (NLP)",
-  ),
-  PromptSubCategory(
-    category: 'ИИ и технологии',
-    subCategory: "Компьютерное зрение",
-  ),
-  PromptSubCategory(
-    category: 'ИИ и технологии',
-    subCategory: "Технологии распознавания речи",
-  ),
-  PromptSubCategory(
-    category: 'ИИ и технологии',
-    subCategory: "Автоматизация и боты",
-  ),
-  PromptSubCategory(category: 'ИИ и технологии', subCategory: "Будущее ИИ"),
-  PromptSubCategory(
-    category: 'ИИ и технологии',
-    subCategory: "Этические вопросы ИИ",
-  ),
-  PromptSubCategory(
-    category: 'ИИ и технологии',
-    subCategory: "Обзор и новости технологий",
+    subCategory: [
+      "Машинное обучение",
+      "Нейросети и глубокое обучение",
+      "Робототехника",
+      "Обработка естественного языка (NLP)",
+      "Компьютерное зрение",
+      "Технологии распознавания речи",
+      "Автоматизация и боты",
+      "Будущее ИИ",
+      "Этические вопросы ИИ",
+      "Обзор и новости технологий",
+    ],
   ),
 
   // 4. Разработка кода
-  PromptSubCategory(category: 'Разработка кода', subCategory: "Веб-разработка"),
   PromptSubCategory(
     category: 'Разработка кода',
-    subCategory: "Мобильная разработка",
-  ),
-  PromptSubCategory(
-    category: 'Разработка кода',
-    subCategory: "Backend и серверы",
-  ),
-  PromptSubCategory(
-    category: 'Разработка кода',
-    subCategory: "Frontend и UI/UX",
-  ),
-  PromptSubCategory(
-    category: 'Разработка кода',
-    subCategory: "Языки программирования",
-  ),
-  PromptSubCategory(
-    category: 'Разработка кода',
-    subCategory: "Базы данных и SQL",
-  ),
-  PromptSubCategory(
-    category: 'Разработка кода',
-    subCategory: "API и интеграции",
-  ),
-  PromptSubCategory(
-    category: 'Разработка кода',
-    subCategory: "Тестирование и отладка",
-  ),
-  PromptSubCategory(category: 'Разработка кода', subCategory: "DevOps и CI/CD"),
-  PromptSubCategory(
-    category: 'Разработка кода',
-    subCategory: "Open Source и коллаборация",
+    subCategory: [
+      "Веб-разработка",
+      "Мобильная разработка",
+      "Backend и серверы",
+      "Frontend и UI/UX",
+      "Языки программирования",
+      "Базы данных и SQL",
+      "API и интеграции",
+      "Тестирование и отладка",
+      "DevOps и CI/CD",
+      "Open Source и коллаборация",
+    ],
   ),
 
   // 5. Обучение и развитие
   PromptSubCategory(
     category: 'Обучение и развитие',
-    subCategory: "Саморазвитие и личностный рост",
-  ),
-  PromptSubCategory(
-    category: 'Обучение и развитие',
-    subCategory: "Изучение языков",
-  ),
-  PromptSubCategory(
-    category: 'Обучение и развитие',
-    subCategory: "Онлайн-курсы и платформы",
-  ),
-  PromptSubCategory(
-    category: 'Обучение и развитие',
-    subCategory: "Методики запоминания",
-  ),
-  PromptSubCategory(
-    category: 'Обучение и развитие',
-    subCategory: "Навыки критического мышления",
-  ),
-  PromptSubCategory(
-    category: 'Обучение и развитие',
-    subCategory: "Планирование учебы",
-  ),
-  PromptSubCategory(
-    category: 'Обучение и развитие',
-    subCategory: "Образовательные игры",
-  ),
-  PromptSubCategory(
-    category: 'Обучение и развитие',
-    subCategory: "Психология обучения",
-  ),
-  PromptSubCategory(
-    category: 'Обучение и развитие',
-    subCategory: "Тренировка мозга",
-  ),
-  PromptSubCategory(
-    category: 'Обучение и развитие',
-    subCategory: "Менторство и коучинг",
-  ),
-  PromptSubCategory(
-    category: 'Обучение и развитие',
-    subCategory: "Развитие креативности",
+    subCategory: [
+      "Саморазвитие и личностный рост",
+      "Изучение языков",
+      "Онлайн-курсы и платформы",
+      "Методики запоминания",
+      "Навыки критического мышления",
+      "Планирование учебы",
+      "Образовательные игры",
+      "Психология обучения",
+      "Тренировка мозга",
+      "Менторство и коучинг",
+      "Развитие креативности",
+    ],
   ),
 
   // 6. Бизнес и карьера
   PromptSubCategory(
     category: 'Бизнес и карьера',
-    subCategory: "Стартапы и предпринимательство",
-  ),
-  PromptSubCategory(
-    category: 'Бизнес и карьера',
-    subCategory: "Лидерство и управление командой",
-  ),
-  PromptSubCategory(
-    category: 'Бизнес и карьера',
-    subCategory: "Маркетинг и продажи",
-  ),
-  PromptSubCategory(
-    category: 'Бизнес и карьера',
-    subCategory: "Финансовое планирование",
-  ),
-  PromptSubCategory(
-    category: 'Бизнес и карьера',
-    subCategory: "Карьерный рост и смена профессии",
-  ),
-  PromptSubCategory(
-    category: 'Бизнес и карьера',
-    subCategory: "Нетворкинг и связи",
-  ),
-  PromptSubCategory(category: 'Бизнес и карьера', subCategory: "Личные бренды"),
-  PromptSubCategory(
-    category: 'Бизнес и карьера',
-    subCategory: "Переговоры и убеждение",
-  ),
-  PromptSubCategory(
-    category: 'Бизнес и карьера',
-    subCategory: "Аналитика и стратегии",
-  ),
-  PromptSubCategory(
-    category: 'Бизнес и карьера',
-    subCategory: "Юридические аспекты бизнеса",
+    subCategory: [
+      "Стартапы и предпринимательство",
+      "Лидерство и управление командой",
+      "Маркетинг и продажи",
+      "Финансовое планирование",
+      "Карьерный рост и смена профессии",
+      "Нетворкинг и связи",
+      "Личные бренды",
+      "Переговоры и убеждение",
+      "Аналитика и стратегии",
+      "Юридические аспекты бизнеса",
+    ],
   ),
 
   // 7. Графика и визуалы
   PromptSubCategory(
     category: 'Графика и визуалы',
-    subCategory: "Дизайн интерфейсов (UI/UX)",
+    subCategory: [
+      "Дизайн интерфейсов (UI/UX)",
+      "Иллюстрация и арт",
+      "Фотография и обработка фото",
+      "Видео и монтаж",
+      "Анимация и моушн-дизайн",
+      "3D-моделирование",
+      "Визуализация данных",
+      "Цветовые схемы и теория цвета",
+      "Типографика",
+      "Инфографика",
+    ],
   ),
-  PromptSubCategory(
-    category: 'Графика и визуалы',
-    subCategory: "Иллюстрация и арт",
-  ),
-  PromptSubCategory(
-    category: 'Графика и визуалы',
-    subCategory: "Фотография и обработка фото",
-  ),
-  PromptSubCategory(
-    category: 'Графика и визуалы',
-    subCategory: "Видео и монтаж",
-  ),
-  PromptSubCategory(
-    category: 'Графика и визуалы',
-    subCategory: "Анимация и моушн-дизайн",
-  ),
-  PromptSubCategory(
-    category: 'Графика и визуалы',
-    subCategory: "3D-моделирование",
-  ),
-  PromptSubCategory(
-    category: 'Графика и визуалы',
-    subCategory: "Визуализация данных",
-  ),
-  PromptSubCategory(
-    category: 'Графика и визуалы',
-    subCategory: "Цветовые схемы и теория цвета",
-  ),
-  PromptSubCategory(category: 'Графика и визуалы', subCategory: "Типографика"),
-  PromptSubCategory(category: 'Графика и визуалы', subCategory: "Инфографика"),
 
   // 8. Культура и переводы
   PromptSubCategory(
     category: 'Культура и переводы',
-    subCategory: "Литература и книги",
-  ),
-  PromptSubCategory(
-    category: 'Культура и переводы',
-    subCategory: "История и традиции",
-  ),
-  PromptSubCategory(
-    category: 'Культура и переводы',
-    subCategory: "Искусство и музеи",
-  ),
-  PromptSubCategory(
-    category: 'Культура и переводы',
-    subCategory: "Музыка и театры",
-  ),
-  PromptSubCategory(
-    category: 'Культура и переводы',
-    subCategory: "Кинематограф",
-  ),
-  PromptSubCategory(
-    category: 'Культура и переводы',
-    subCategory: "Языки и диалекты",
-  ),
-  PromptSubCategory(
-    category: 'Культура и переводы',
-    subCategory: "Переводческие техники",
-  ),
-  PromptSubCategory(
-    category: 'Культура и переводы',
-    subCategory: "Межкультурные коммуникации",
-  ),
-  PromptSubCategory(
-    category: 'Культура и переводы',
-    subCategory: "Фольклор и мифология",
-  ),
-  PromptSubCategory(
-    category: 'Культура и переводы',
-    subCategory: "Современные культурные тренды",
+    subCategory: [
+      "Литература и книги",
+      "История и традиции",
+      "Искусство и музеи",
+      "Музыка и театры",
+      "Кинематограф",
+      "Языки и диалекты",
+      "Переводческие техники",
+      "Межкультурные коммуникации",
+      "Фольклор и мифология",
+      "Современные культурные тренды",
+    ],
   ),
 
   // 9. Развлечения
-  PromptSubCategory(category: 'Развлечения', subCategory: "Игры и геймдизайн"),
-  PromptSubCategory(category: 'Развлечения', subCategory: "Кино и сериалы"),
-  PromptSubCategory(category: 'Развлечения', subCategory: "Музыка и плейлисты"),
-  PromptSubCategory(category: 'Развлечения', subCategory: "Юмор и мемы"),
   PromptSubCategory(
     category: 'Развлечения',
-    subCategory: "Путешествия и туризм",
-  ),
-  PromptSubCategory(category: 'Развлечения', subCategory: "Хобби и DIY"),
-  PromptSubCategory(
-    category: 'Развлечения',
-    subCategory: "Косплей и фан-культура",
-  ),
-  PromptSubCategory(
-    category: 'Развлечения',
-    subCategory: "Вечеринки и события",
-  ),
-  PromptSubCategory(category: 'Развлечения', subCategory: "Книги и комиксы"),
-  PromptSubCategory(
-    category: 'Развлечения',
-    subCategory: "Видеоблоги и стриминг",
+    subCategory: [
+      "Игры и геймдизайн",
+      "Кино и сериалы",
+      "Музыка и плейлисты",
+      "Юмор и мемы",
+      "Путешествия и туризм",
+      "Хобби и DIY",
+      "Косплей и фан-культура",
+      "Вечеринки и события",
+      "Книги и комиксы",
+      "Видеоблоги и стриминг",
+    ],
   ),
 ];
