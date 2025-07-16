@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gpt_prompt_builder/constants/prompt_category.dart';
-import 'package:gpt_prompt_builder/constants/prompt_subcategory.dart';
-import 'package:gpt_prompt_builder/features/prompt_generation/domain/models/prompt_subcategory_models.dart';
+import 'package:gpt_prompt_builder/features/home/domain/models/prompt_category_models.dart';
+import 'package:gpt_prompt_builder/features/prompt/presentation/ui/prompt_screen.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/button_prompt_generation.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/category_universal.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/text_field_universal.dart';
@@ -16,8 +16,8 @@ class PromptGenerationScreen extends StatefulWidget {
 }
 
 class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
-  final GlobalKey _CategorymenuKey = GlobalKey();
-  final GlobalKey _SubCategorymenuKey = GlobalKey();
+  final GlobalKey _CategoryMenuKey = GlobalKey();
+  final GlobalKey _SubCategoryMenuKey = GlobalKey();
   late String selectedCategory;
   bool _isMenuOpenCategory = false;
   bool _isMenuOpenSubCategory = false;
@@ -32,12 +32,12 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
   }
 
   List<String> getSubCategoriesByCategory(String category) {
-    return subCategories
-        .firstWhere(
-          (e) => e.category == category,
-          orElse: () => PromptSubCategory(category: '', subCategory: []),
-        )
-        .subCategory;
+    final categoryModel = promptCategories.firstWhere(
+      (e) => e.category == category,
+      orElse: () => PromptCategory(category: '', subCategories: []),
+    );
+
+    return categoryModel.subCategories.map((e) => e.subCategories).toList();
   }
 
   void _showDropdownMenu(BuildContext context) async {
@@ -45,7 +45,7 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
       _isMenuOpenCategory = true;
     });
     final RenderBox renderBox =
-        _CategorymenuKey.currentContext!.findRenderObject() as RenderBox;
+        _CategoryMenuKey.currentContext!.findRenderObject() as RenderBox;
     final Offset offset = renderBox.localToGlobal(Offset.zero);
     final size = renderBox.size;
     final screenSize = MediaQuery.of(context).size;
@@ -122,7 +122,7 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
       _isMenuOpenSubCategory = true;
     });
     final RenderBox renderBox =
-        _SubCategorymenuKey.currentContext!.findRenderObject() as RenderBox;
+        _SubCategoryMenuKey.currentContext!.findRenderObject() as RenderBox;
     final Offset offset = renderBox.localToGlobal(Offset.zero);
     final size = renderBox.size;
     final screenSize = MediaQuery.of(context).size;
@@ -235,7 +235,7 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
             ),
             SizedBox(height: 20),
             CategoryUniversal(
-              key: _CategorymenuKey,
+              key: _CategoryMenuKey,
               text: 'Категория',
               textCategory: selectedCategory,
               icon:
@@ -245,7 +245,7 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
               onTap: () => _showDropdownMenu(context),
             ),
             CategoryUniversal(
-              key: _SubCategorymenuKey,
+              key: _SubCategoryMenuKey,
               text: 'Подкатегория',
               textCategory: selectedSubCategory,
               icon:
@@ -255,7 +255,15 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
               onTap: () => _showDropdownMenuSubCategory(context),
             ),
             SizedBox(height: 20),
-            ButtonPromptGeneration(text: 'Сгенерировать промпт', onTap: () {}),
+            ButtonPromptGeneration(
+              text: 'Сгенерировать промпт',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PromptScreen()),
+                );
+              },
+            ),
           ],
         ),
       ),

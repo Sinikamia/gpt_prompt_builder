@@ -32,7 +32,7 @@ class AppBarUniversal extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
           child:
               onPressed != null
                   ? Row(
@@ -64,7 +64,14 @@ class AppBarUniversal extends StatelessWidget implements PreferredSizeWidget {
                               ),
                             ],
                           )
-                          : Center(child: Text(text, style: myStyle)),
+                          : Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              text,
+                              textAlign: TextAlign.center,
+                              style: myStyle,
+                            ),
+                          ),
                     ],
                   )
                   : icon != null
@@ -82,7 +89,13 @@ class AppBarUniversal extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ],
                   )
-                  : Center(child: Text(text, style: myStyle)),
+                  : Center(
+                    child: Text(
+                      text,
+                      textAlign: TextAlign.center,
+                      style: myStyle,
+                    ),
+                  ),
         ),
       ),
     );

@@ -18,46 +18,40 @@ class HomeScreen extends StatelessWidget {
         icon: Icons.person,
         onTap: () {},
       ),
-      body: Column(
+      body: ListView(
+        padding: EdgeInsets.only(top: 5, bottom: 20),
         children: [
-          SizedBox(height: 5),
-          ButtonSearch(controller: controller),
-          SizedBox(height: 15),
-          Expanded(
-            child: ListView.builder(
-              itemCount: (promptCategories.length / 2).ceil(),
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final int firstIndex = index * 2;
-                final int secondIndex = firstIndex + 1;
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          ButtonCategoryPrompts(
-                            text: promptCategories[firstIndex].category,
-                            icon: promptCategories[firstIndex].icon,
-                            onTap: onTap,
-                          ),
-                          if (secondIndex < promptCategories.length)
-                            ButtonCategoryPrompts(
-                              text: promptCategories[secondIndex].category,
-                              icon: promptCategories[secondIndex].icon,
-                              onTap: onTap,
-                            )
-                          else
-                            SizedBox(),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: ButtonSearch(controller: controller),
           ),
+          SizedBox(height: 15),
+          ...List.generate((promptCategories.length / 2).ceil(), (index) {
+            final int firstIndex = index * 2;
+            final int secondIndex = firstIndex + 1;
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(
+                children: [
+                  ButtonCategoryPrompts(
+                    text: promptCategories[firstIndex].category,
+                    icon: promptCategories[firstIndex].icon ?? Icons.category,
+                    onTap: onTap,
+                  ),
+                  if (secondIndex < promptCategories.length)
+                    ButtonCategoryPrompts(
+                      text: promptCategories[secondIndex].category,
+                      icon:
+                          promptCategories[secondIndex].icon ?? Icons.category,
+                      onTap: onTap,
+                    )
+                  else
+                    SizedBox(),
+                ],
+              ),
+            );
+          }),
         ],
       ),
     );

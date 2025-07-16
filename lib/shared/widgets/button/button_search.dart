@@ -7,7 +7,7 @@ class ButtonSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double widthSearch = width - (10 * 3);
+    double widthSearch = width - 40;
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       child: Container(
@@ -19,14 +19,15 @@ class ButtonSearch extends StatelessWidget {
         ),
         child: TextField(
           controller: controller,
+          style: const TextStyle(color: Colors.white),
           decoration: const InputDecoration(
             border: InputBorder.none,
-            fillColor: Colors.white,
             icon: Padding(
               padding: EdgeInsets.only(left: 8.0),
-              child: Icon(Icons.search),
+              child: Icon(Icons.search, color: Colors.white54),
             ),
             hintText: "Быстрый поиск",
+            hintStyle: const TextStyle(color: Colors.white54, fontSize: 16),
           ),
         ),
       ),
