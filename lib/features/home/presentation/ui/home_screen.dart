@@ -4,11 +4,16 @@ import 'package:gpt_prompt_builder/features/home/presentation/ui/widgets/button_
 import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_universal.dart';
 import 'package:gpt_prompt_builder/shared/widgets/button/button_search.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final TextEditingController controller;
   final void Function(String category) onTap;
   const HomeScreen({super.key, required this.controller, required this.onTap});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +28,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: ButtonSearch(controller: controller),
+            child: ButtonSearch(controller: widget.controller),
           ),
           SizedBox(height: 15),
           ...List.generate((promptCategories.length / 2).ceil(), (index) {
@@ -37,14 +42,14 @@ class HomeScreen extends StatelessWidget {
                   ButtonCategoryPrompts(
                     text: promptCategories[firstIndex].category,
                     icon: promptCategories[firstIndex].icon ?? Icons.category,
-                    onTap: onTap,
+                    onTap: widget.onTap,
                   ),
                   if (secondIndex < promptCategories.length)
                     ButtonCategoryPrompts(
                       text: promptCategories[secondIndex].category,
                       icon:
                           promptCategories[secondIndex].icon ?? Icons.category,
-                      onTap: onTap,
+                      onTap: widget.onTap,
                     )
                   else
                     SizedBox(),

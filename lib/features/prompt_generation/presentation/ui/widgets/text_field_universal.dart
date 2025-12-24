@@ -4,11 +4,13 @@ class TextFieldUniversal extends StatelessWidget {
   final IconData icon;
   final String text;
   final String hintText;
-  const TextFieldUniversal({
+  final TextEditingController? controller;
+  TextFieldUniversal({
     super.key,
     required this.icon,
     required this.text,
     required this.hintText,
+    this.controller,
   });
 
   @override
@@ -39,6 +41,7 @@ class TextFieldUniversal extends StatelessWidget {
               border: Border.all(color: Colors.white24, width: 1),
             ),
             child: TextField(
+              controller: controller,
               maxLines: null,
               minLines: 1,
               style: const TextStyle(color: Colors.white),

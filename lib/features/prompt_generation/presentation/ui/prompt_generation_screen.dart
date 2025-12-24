@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gpt_prompt_builder/constants/prompt_category.dart';
 import 'package:gpt_prompt_builder/features/home/domain/models/prompt_category_models.dart';
 import 'package:gpt_prompt_builder/features/prompt/presentation/ui/prompt_screen.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/button_prompt_generation.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/category_universal.dart';
+import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/showDropdownMenu.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/text_field_universal.dart';
 import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_universal.dart';
 
@@ -22,8 +25,22 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
   bool _isMenuOpenCategory = false;
   bool _isMenuOpenSubCategory = false;
   late String selectedSubCategory;
+  bool showSnackBarInsteadOfButton = false;
+  String snackBarMessage = "";
+  final TextEditingController _templateController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _hintController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
 
   @override
+  void dispose() {
+    _templateController.dispose();
+    _descriptionController.dispose();
+    _hintController.dispose();
+    _titleController.dispose();
+    super.dispose();
+  }
+
   void initState() {
     super.initState();
     selectedCategory = widget.selectedCategory;
@@ -41,73 +58,16 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
   }
 
   void _showDropdownMenu(BuildContext context) async {
-    setState(() {
-      _isMenuOpenCategory = true;
-    });
-    final RenderBox renderBox =
-        _CategoryMenuKey.currentContext!.findRenderObject() as RenderBox;
-    final Offset offset = renderBox.localToGlobal(Offset.zero);
-    final size = renderBox.size;
-    final screenSize = MediaQuery.of(context).size;
-    final double menuHeight = promptCategories.length * 48.0;
-    final double desiredWidth = 200;
-    final double menuWidth = desiredWidth.clamp(150.0, 300.0);
-    final double top = offset.dy - menuHeight;
-    final double left = offset.dx + size.width - 200;
-    final double right = screenSize.width - offset.dx - size.width;
-    final double bottom = screenSize.height - offset.dy;
-    final selected = await showMenu<String>(
+    setState(() => _isMenuOpenCategory = true);
+
+    final selected = await ShowDropdownMenu.show<String>(
       context: context,
-      position: RelativeRect.fromLTRB(left, top, right, bottom),
-      items: [
-        PopupMenuItem<String>(
-          enabled: false,
-          child: SizedBox(
-            width: menuWidth,
-            height: promptCategories.length * 47.0,
-            child: ListView(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              children:
-                  promptCategories.map((promptCategory) {
-                    return ListTile(
-                      title: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.white24,
-                              width: 0.3,
-                            ),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            promptCategory.category,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context, promptCategory.category);
-                      },
-                    );
-                  }).toList(),
-            ),
-          ),
-        ),
-      ],
-      elevation: 4,
-      color: Color(0xFF1C1C1E),
+      anchorKey: _CategoryMenuKey,
+      items: promptCategories.map((e) => e.category).toList(),
     );
-    setState(() {
-      _isMenuOpenCategory = false;
-    });
+
+    setState(() => _isMenuOpenCategory = false);
+
     if (selected != null) {
       final subList = getSubCategoriesByCategory(selected);
       setState(() {
@@ -118,82 +78,53 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
   }
 
   void _showDropdownMenuSubCategory(BuildContext context) async {
-    setState(() {
-      _isMenuOpenSubCategory = true;
-    });
-    final RenderBox renderBox =
-        _SubCategoryMenuKey.currentContext!.findRenderObject() as RenderBox;
-    final Offset offset = renderBox.localToGlobal(Offset.zero);
-    final size = renderBox.size;
-    final screenSize = MediaQuery.of(context).size;
-    final subCategoryList = getSubCategoriesByCategory(selectedCategory);
-    if (subCategoryList.isEmpty) {
+    setState(() => _isMenuOpenSubCategory = true);
+
+    final subCategories = getSubCategoriesByCategory(selectedCategory);
+    if (subCategories.isEmpty) {
       setState(() => _isMenuOpenSubCategory = false);
       return;
     }
-    final double menuHeight = subCategoryList.length * 48.0;
-    final double desiredWidth = 200;
-    final double menuWidth = desiredWidth.clamp(150.0, 300.0);
-    final double top = offset.dy - menuHeight;
-    final double left = offset.dx + size.width - 200;
-    final double right = screenSize.width - offset.dx - size.width;
-    final double bottom = screenSize.height - offset.dy;
-    final selected = await showMenu<String>(
+
+    final selected = await ShowDropdownMenu.show<String>(
       context: context,
-      position: RelativeRect.fromLTRB(left, top, right, bottom),
-      items: [
-        PopupMenuItem<String>(
-          enabled: false,
-          child: SizedBox(
-            width: menuWidth,
-            height: subCategoryList.length * 47.0,
-            child: ListView(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              children:
-                  subCategoryList.map((subCategory) {
-                    return ListTile(
-                      title: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.white24,
-                              width: 0.3,
-                            ),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            subCategory,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context, subCategory);
-                      },
-                    );
-                  }).toList(),
-            ),
-          ),
-        ),
-      ],
-      elevation: 4,
-      color: Color(0xFF1C1C1E),
+      anchorKey: _SubCategoryMenuKey,
+      items: subCategories,
     );
-    setState(() {
-      _isMenuOpenSubCategory = false;
-    });
+
+    setState(() => _isMenuOpenSubCategory = false);
+
     if (selected != null) {
+      setState(() => selectedSubCategory = selected);
+    }
+  }
+
+  void showTemporarySnackBar(String message) {
+    setState(() {
+      showSnackBarInsteadOfButton = true;
+      snackBarMessage = message;
+    });
+    Timer(const Duration(seconds: 2), () {
       setState(() {
-        selectedSubCategory = selected;
+        showSnackBarInsteadOfButton = false;
       });
+    });
+  }
+
+  void promptGeneration() {
+    if (_templateController.text.isEmpty) {
+      showTemporarySnackBar("Заполните поле шаблона промпта");
+    } else if (_descriptionController.text.isEmpty) {
+      showTemporarySnackBar("Заполните поле описание");
+    } else if (_hintController.text.isEmpty) {
+      showTemporarySnackBar("Заполните поле подсказки промпта");
+    } else if (_titleController.text.isEmpty) {
+      showTemporarySnackBar("Заполните поле название промпта");
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PromptScreen()),
+      );
     }
   }
 
@@ -213,22 +144,26 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
           scrollDirection: Axis.vertical,
           children: [
             TextFieldUniversal(
+              controller: _templateController,
               text: 'Шаблон промпта',
               icon: Icons.description_outlined,
               hintText:
                   'Пример: Я хочу, чтобы ты выступал как автор писем. Твоя задача — написать письмо на основе того, что я предоставлю, чтобы чётко выразить мои мысли. Мой первый запрос: [Подсказка к промпту]',
             ),
             TextFieldUniversal(
+              controller: _descriptionController,
               text: 'Описание',
               icon: Icons.edit_note,
               hintText: 'Пример: Сделай письмо более профессиональным',
             ),
             TextFieldUniversal(
+              controller: _hintController,
               text: 'Подсказка к промпту',
               icon: Icons.tips_and_updates_outlined,
               hintText: 'Пример: Тема вашего письма',
             ),
             TextFieldUniversal(
+              controller: _titleController,
               text: 'Название промпта',
               icon: Icons.drive_file_rename_outline,
               hintText: 'Пример: Лучший шаблон письма',
@@ -255,15 +190,22 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
               onTap: () => _showDropdownMenuSubCategory(context),
             ),
             SizedBox(height: 20),
-            ButtonPromptGeneration(
-              text: 'Сгенерировать промпт',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PromptScreen()),
-                );
-              },
-            ),
+            showSnackBarInsteadOfButton
+                ? Center(
+                  child: Text(
+                    snackBarMessage,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                )
+                : ButtonPromptGeneration(
+                  text: 'Сгенерировать промпт',
+                  onTap: promptGeneration,
+                ),
           ],
         ),
       ),
