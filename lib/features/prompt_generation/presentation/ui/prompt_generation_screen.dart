@@ -130,6 +130,11 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle myStyle = const TextStyle(
+      color: Colors.white70,
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+    );
     return Scaffold(
       backgroundColor: Color(0xFF1C1C1E),
       appBar: AppBarUniversal(
@@ -195,11 +200,7 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
                   child: Text(
                     snackBarMessage,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: myStyle,
                   ),
                 )
                 : ButtonPromptGeneration(
