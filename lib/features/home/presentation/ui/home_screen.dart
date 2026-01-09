@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gpt_prompt_builder/constants/prompt_category.dart';
+import 'package:gpt_prompt_builder/features/account/presentation/ui/account_screen.dart';
 import 'package:gpt_prompt_builder/features/home/domain/models/prompt_category_models.dart';
 import 'package:gpt_prompt_builder/features/home/presentation/ui/widgets/button_category_prompts.dart';
 import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_universal.dart';
@@ -61,7 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBarUniversal(
         text: 'Генератор промптов',
         icon: Icons.person,
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AccountScreen()),
+          );
+        },
       ),
       body: ListView(
         padding: EdgeInsets.only(top: 5, bottom: 20),

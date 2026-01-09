@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gpt_prompt_builder/constants/prompt_category.dart';
 import 'package:gpt_prompt_builder/features/home/domain/models/prompt_category_models.dart';
 import 'package:gpt_prompt_builder/features/prompt/presentation/ui/prompt_screen.dart';
+import 'package:gpt_prompt_builder/features/prompt_generation/domain/models/prompt_models.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/button_prompt_generation.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/category_universal.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/showDropdownMenu.dart';
@@ -114,18 +115,37 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
   void promptGeneration() {
     if (_templateController.text.isEmpty) {
       showTemporarySnackBar("Заполните поле шаблона промпта");
-    } else if (_descriptionController.text.isEmpty) {
-      showTemporarySnackBar("Заполните поле описание");
-    } else if (_hintController.text.isEmpty) {
-      showTemporarySnackBar("Заполните поле подсказки промпта");
-    } else if (_titleController.text.isEmpty) {
-      showTemporarySnackBar("Заполните поле название промпта");
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => PromptScreen()),
-      );
+      return;
     }
+
+    if (_descriptionController.text.isEmpty) {
+      showTemporarySnackBar("Заполните поле описание");
+      return;
+    }
+
+    if (_hintController.text.isEmpty) {
+      showTemporarySnackBar("Заполните поле подсказки промпта");
+      return;
+    }
+
+    if (_titleController.text.isEmpty) {
+      showTemporarySnackBar("Заполните поле название промпта");
+      return;
+    }
+
+    final prompt = PromptModel(
+      promptTemplate: _templateController.text.trim(),
+      description: _descriptionController.text.trim(),
+      promptHint: _hintController.text.trim(),
+      promptTitle: _titleController.text.trim(),
+      category: selectedCategory,
+      subCategory: selectedSubCategory,
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => PromptScreen(prompt: prompt)),
+    );
   }
 
   @override

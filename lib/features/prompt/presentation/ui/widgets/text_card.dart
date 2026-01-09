@@ -13,7 +13,7 @@ class TextCard extends StatelessWidget {
       fontWeight: FontWeight.w600,
     );
     const myStyle1 = TextStyle(
-      color: Colors.white54,
+      color: Colors.white,
       fontSize: 16,
       fontWeight: FontWeight.w500,
     );
