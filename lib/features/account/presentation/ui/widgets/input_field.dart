@@ -6,6 +6,8 @@ class InputField extends StatelessWidget {
   final bool obscure;
   final bool obscureText;
   final VoidCallback? onPressed;
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
 
   const InputField({
     super.key,
@@ -14,6 +16,8 @@ class InputField extends StatelessWidget {
     required this.obscure,
     required this.obscureText,
     this.onPressed,
+    this.controller,
+    this.onChanged,
   });
 
   @override
@@ -21,14 +25,15 @@ class InputField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: TextField(
+        controller: controller,
         obscureText: obscureText,
+        onChanged: onChanged,
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: const TextStyle(color: Colors.white38),
           prefixIcon: Icon(icon, color: Colors.white54),
 
-          /// 👁 suffixIcon
           suffixIcon:
               obscure
                   ? IconButton(

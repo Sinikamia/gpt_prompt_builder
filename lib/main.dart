@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:gpt_prompt_builder/core/firebase/firebase_options.dart';
 import 'package:gpt_prompt_builder/features/history/presentation/ui/history_screen.dart';
 import 'package:gpt_prompt_builder/features/home/presentation/ui/home_screen.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/prompt_generation_screen.dart';
@@ -8,7 +9,8 @@ import 'package:gpt_prompt_builder/shared/widgets/bottom_navigation_bar/bottom_n
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
