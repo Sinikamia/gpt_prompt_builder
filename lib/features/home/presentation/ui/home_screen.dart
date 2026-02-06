@@ -7,9 +7,8 @@ import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_universal.dart
 import 'package:gpt_prompt_builder/shared/widgets/button/button_search.dart';
 
 class HomeScreen extends StatefulWidget {
-  final TextEditingController controller;
   final void Function(String category) onTap;
-  const HomeScreen({super.key, required this.controller, required this.onTap});
+  const HomeScreen({super.key, required this.onTap});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -17,15 +16,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<PromptCategory> filteredCategories = [];
+  final TextEditingController _controller = TextEditingController();
   @override
   void initState() {
     super.initState();
     filteredCategories = List.from(promptCategories);
-    widget.controller.addListener(_onSearchChanged);
+    _controller.addListener(_onSearchChanged);
   }
 
   void _onSearchChanged() {
-    final query = widget.controller.text.toLowerCase().trim();
+    final query = _controller.text.toLowerCase().trim();
 
     setState(() {
       if (query.isEmpty) {
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    widget.controller.removeListener(_onSearchChanged);
+    _controller.removeListener(_onSearchChanged);
     super.dispose();
   }
 
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: ButtonSearch(controller: widget.controller),
+            child: ButtonSearch(controller: _controller),
           ),
           SizedBox(height: 15),
           ...List.generate((filteredCategories.length / 2).ceil(), (index) {
