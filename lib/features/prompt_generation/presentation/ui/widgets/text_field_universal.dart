@@ -5,7 +5,7 @@ class TextFieldUniversal extends StatelessWidget {
   final String text;
   final String hintText;
   final TextEditingController? controller;
-  TextFieldUniversal({
+  const TextFieldUniversal({
     super.key,
     required this.icon,
     required this.text,

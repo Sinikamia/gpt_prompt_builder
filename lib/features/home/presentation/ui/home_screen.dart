@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gpt_prompt_builder/constants/prompt_category.dart';
-import 'package:gpt_prompt_builder/features/account/presentation/ui/account_screen.dart';
 import 'package:gpt_prompt_builder/features/home/domain/models/prompt_category_models.dart';
 import 'package:gpt_prompt_builder/features/home/presentation/ui/widgets/button_category_prompts.dart';
 import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_universal.dart';
@@ -62,49 +62,51 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBarUniversal(
         text: 'Генератор промптов',
         icon: Icons.person,
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AccountScreen()),
-          );
-        },
+        onTap: () => context.go('/account'),
       ),
-      body: ListView(
-        padding: EdgeInsets.only(top: 5, bottom: 20),
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: ButtonSearch(controller: _controller),
-          ),
-          SizedBox(height: 15),
-          ...List.generate((filteredCategories.length / 2).ceil(), (index) {
-            final int firstIndex = index * 2;
-            final int secondIndex = firstIndex + 1;
-
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 5),
+            ButtonSearch(controller: _controller),
+            const SizedBox(height: 15),
+            Expanded(
+              child: ListView(
                 children: [
-                  ButtonCategoryPrompts(
-                    text: filteredCategories[firstIndex].category,
-                    icon: filteredCategories[firstIndex].icon ?? Icons.category,
-                    onTap: widget.onTap,
-                  ),
-                  if (secondIndex < filteredCategories.length)
-                    ButtonCategoryPrompts(
-                      text: filteredCategories[secondIndex].category,
-                      icon:
-                          filteredCategories[secondIndex].icon ??
-                          Icons.category,
-                      onTap: widget.onTap,
-                    )
-                  else
-                    SizedBox(),
+                  ...List.generate((filteredCategories.length / 2).ceil(), (
+                    index,
+                  ) {
+                    final int firstIndex = index * 2;
+                    final int secondIndex = firstIndex + 1;
+
+                    return Row(
+                      children: [
+                        ButtonCategoryPrompts(
+                          text: filteredCategories[firstIndex].category,
+                          icon:
+                              filteredCategories[firstIndex].icon ??
+                              Icons.category,
+                          onTap: widget.onTap,
+                        ),
+                        if (secondIndex < filteredCategories.length)
+                          ButtonCategoryPrompts(
+                            text: filteredCategories[secondIndex].category,
+                            icon:
+                                filteredCategories[secondIndex].icon ??
+                                Icons.category,
+                            onTap: widget.onTap,
+                          )
+                        else
+                          SizedBox(),
+                      ],
+                    );
+                  }),
                 ],
               ),
-            );
-          }),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

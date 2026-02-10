@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gpt_prompt_builder/features/account/domain/auth_service.dart';
 import 'package:gpt_prompt_builder/features/account/presentation/ui/widgets/input_field.dart';
-import 'package:gpt_prompt_builder/features/account_registration/presentation/ui/account_registration_screen.dart';
 import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_universal.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -31,10 +31,9 @@ class _AccountScreenState extends State<AccountScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xFF1C1C1E),
-      appBar: AppBarUniversal(onPressed: () => Navigator.pop(context)),
+      appBar: AppBarUniversal(onPressed: () => context.go('/')),
       body: Stack(
         children: [
-          /// Фон
           Opacity(
             opacity: 0.8,
             child: Container(
@@ -47,7 +46,6 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
           ),
 
-          /// Контент
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -207,7 +205,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                           email,
                                           password,
                                         );
-                                        Navigator.pop(context);
+                                        context.go('/');
                                       } catch (_) {
                                         setState(() {
                                           _passwordError =
@@ -246,16 +244,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ),
                                     TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder:
-                                                (context) =>
-                                                    const AccountRegistrationScreen(),
-                                          ),
-                                        );
-                                      },
+                                      onPressed:
+                                          () => context.go('/registration'),
                                       child: const Text(
                                         'Зарегистрироваться',
                                         style: TextStyle(

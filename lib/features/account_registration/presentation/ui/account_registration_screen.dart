@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gpt_prompt_builder/features/account/domain/auth_service.dart';
 import 'package:gpt_prompt_builder/features/account/presentation/ui/widgets/input_field.dart';
 import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_universal.dart';
@@ -79,7 +80,7 @@ class _AccountRegistrationScreenState extends State<AccountRegistrationScreen> {
       await _authService.signUp(email, password);
 
       if (!mounted) return;
-      Navigator.pop(context);
+      context.go('/');
     } catch (e) {
       setState(() {
         _confirmPasswordError = e.toString();
@@ -92,7 +93,7 @@ class _AccountRegistrationScreenState extends State<AccountRegistrationScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xFF1C1C1E),
-      appBar: AppBarUniversal(onPressed: () => Navigator.pop(context)),
+      appBar: AppBarUniversal(onPressed: () => context.go('/')),
       body: Stack(
         children: [
           /// Фон
@@ -329,7 +330,7 @@ class _AccountRegistrationScreenState extends State<AccountRegistrationScreen> {
                                       ),
                                     ),
                                     TextButton(
-                                      onPressed: () {},
+                                      onPressed: () => context.go('/account'),
                                       child: const Text(
                                         'Войти',
                                         style: TextStyle(

@@ -27,7 +27,7 @@ class ButtonSearch extends StatelessWidget {
               child: Icon(Icons.search, color: Colors.white54),
             ),
             hintText: "Быстрый поиск",
-            hintStyle: const TextStyle(color: Colors.white54, fontSize: 16),
+            hintStyle: TextStyle(color: Colors.white54, fontSize: 16),
           ),
         ),
       ),

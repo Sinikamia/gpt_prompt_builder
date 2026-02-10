@@ -55,7 +55,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/generation',
       builder: (context, state) {
-        final selectedCategory = state.extra as String;
+        final selectedCategory = state.extra as String? ?? '';
         return PromptGenerationScreen(selectedCategory: selectedCategory);
       },
     ),

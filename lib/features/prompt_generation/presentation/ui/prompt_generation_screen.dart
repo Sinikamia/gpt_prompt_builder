@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gpt_prompt_builder/constants/prompt_category.dart';
 import 'package:gpt_prompt_builder/features/home/domain/models/prompt_category_models.dart';
-import 'package:gpt_prompt_builder/features/prompt/presentation/ui/prompt_screen.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/domain/models/prompt_models.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/button_prompt_generation.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/category_universal.dart';
-import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/showDropdownMenu.dart';
+import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/show_dropdown_menu.dart';
 import 'package:gpt_prompt_builder/features/prompt_generation/presentation/ui/widgets/text_field_universal.dart';
 import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_universal.dart';
 
@@ -21,27 +21,25 @@ class PromptGenerationScreen extends StatefulWidget {
 
 class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
   final GlobalKey _CategoryMenuKey = GlobalKey();
-  final GlobalKey _SubCategoryMenuKey = GlobalKey();
   late String selectedCategory;
   bool _isMenuOpenCategory = false;
-  bool _isMenuOpenSubCategory = false;
   late String selectedSubCategory;
   bool showSnackBarInsteadOfButton = false;
   String snackBarMessage = "";
-  final TextEditingController _templateController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _hintController = TextEditingController();
-  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _aiRoleController = TextEditingController();
+  final TextEditingController _goalController = TextEditingController();
+  final TextEditingController _inputDescriptionController =
+      TextEditingController();
 
   @override
   void dispose() {
-    _templateController.dispose();
-    _descriptionController.dispose();
-    _hintController.dispose();
-    _titleController.dispose();
+    _aiRoleController.dispose();
+    _goalController.dispose();
+    _inputDescriptionController.dispose();
     super.dispose();
   }
 
+  @override
   void initState() {
     super.initState();
     selectedCategory = widget.selectedCategory;
@@ -78,28 +76,6 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
     }
   }
 
-  void _showDropdownMenuSubCategory(BuildContext context) async {
-    setState(() => _isMenuOpenSubCategory = true);
-
-    final subCategories = getSubCategoriesByCategory(selectedCategory);
-    if (subCategories.isEmpty) {
-      setState(() => _isMenuOpenSubCategory = false);
-      return;
-    }
-
-    final selected = await ShowDropdownMenu.show<String>(
-      context: context,
-      anchorKey: _SubCategoryMenuKey,
-      items: subCategories,
-    );
-
-    setState(() => _isMenuOpenSubCategory = false);
-
-    if (selected != null) {
-      setState(() => selectedSubCategory = selected);
-    }
-  }
-
   void showTemporarySnackBar(String message) {
     setState(() {
       showSnackBarInsteadOfButton = true;
@@ -113,39 +89,29 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
   }
 
   void promptGeneration() {
-    if (_templateController.text.isEmpty) {
-      showTemporarySnackBar("Заполните поле шаблона промпта");
+    if (_aiRoleController.text.isEmpty) {
+      showTemporarySnackBar("Укажите роль ИИ");
       return;
     }
 
-    if (_descriptionController.text.isEmpty) {
-      showTemporarySnackBar("Заполните поле описание");
+    if (_goalController.text.isEmpty) {
+      showTemporarySnackBar("Опишите цель");
       return;
     }
 
-    if (_hintController.text.isEmpty) {
-      showTemporarySnackBar("Заполните поле подсказки промпта");
-      return;
-    }
-
-    if (_titleController.text.isEmpty) {
-      showTemporarySnackBar("Заполните поле название промпта");
+    if (_inputDescriptionController.text.isEmpty) {
+      showTemporarySnackBar("Укажите входные данные");
       return;
     }
 
     final prompt = PromptModel(
-      promptTemplate: _templateController.text.trim(),
-      description: _descriptionController.text.trim(),
-      promptHint: _hintController.text.trim(),
-      promptTitle: _titleController.text.trim(),
+      aiRole: _aiRoleController.text.trim(),
+      goal: _goalController.text.trim(),
+      inputDescription: _inputDescriptionController.text.trim(),
       category: selectedCategory,
-      subCategory: selectedSubCategory,
     );
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => PromptScreen(prompt: prompt)),
-    );
+    context.go("/prompt", extra: prompt);
   }
 
   @override
@@ -159,74 +125,62 @@ class _PromptGenerationScreenState extends State<PromptGenerationScreen> {
       backgroundColor: Color(0xFF1C1C1E),
       appBar: AppBarUniversal(
         text: 'Создание промпта',
-        onPressed: () {
-          Navigator.pop(context);
-        },
+        onPressed: () => context.go('/'),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-        child: ListView(
-          scrollDirection: Axis.vertical,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        child: Column(
           children: [
-            TextFieldUniversal(
-              controller: _templateController,
-              text: 'Шаблон промпта',
-              icon: Icons.description_outlined,
-              hintText:
-                  'Пример: Я хочу, чтобы ты выступал как автор писем. Твоя задача — написать письмо на основе того, что я предоставлю, чтобы чётко выразить мои мысли. Мой первый запрос: [Подсказка к промпту]',
-            ),
-            TextFieldUniversal(
-              controller: _descriptionController,
-              text: 'Описание',
-              icon: Icons.edit_note,
-              hintText: 'Пример: Сделай письмо более профессиональным',
-            ),
-            TextFieldUniversal(
-              controller: _hintController,
-              text: 'Подсказка к промпту',
-              icon: Icons.tips_and_updates_outlined,
-              hintText: 'Пример: Тема вашего письма',
-            ),
-            TextFieldUniversal(
-              controller: _titleController,
-              text: 'Название промпта',
-              icon: Icons.drive_file_rename_outline,
-              hintText: 'Пример: Лучший шаблон письма',
-            ),
-            SizedBox(height: 20),
-            CategoryUniversal(
-              key: _CategoryMenuKey,
-              text: 'Категория',
-              textCategory: selectedCategory,
-              icon:
-                  _isMenuOpenCategory
-                      ? Icons.arrow_drop_up
-                      : Icons.arrow_drop_down,
-              onTap: () => _showDropdownMenu(context),
-            ),
-            CategoryUniversal(
-              key: _SubCategoryMenuKey,
-              text: 'Подкатегория',
-              textCategory: selectedSubCategory,
-              icon:
-                  _isMenuOpenSubCategory
-                      ? Icons.arrow_drop_up
-                      : Icons.arrow_drop_down,
-              onTap: () => _showDropdownMenuSubCategory(context),
+            Expanded(
+              child: ListView(
+                children: [
+                  TextFieldUniversal(
+                    controller: _aiRoleController,
+                    text: 'Роль ИИ',
+                    icon: Icons.person_outlined,
+                    hintText:
+                        'Пример: Автор деловых писем, копирайтер, маркетолог, Flutter-разработчик',
+                  ),
+                  TextFieldUniversal(
+                    controller: _goalController,
+                    text: 'Цель',
+                    icon: Icons.flag_outlined,
+                    hintText: 'Пример: Сделай письмо более профессиональным',
+                  ),
+                  TextFieldUniversal(
+                    controller: _inputDescriptionController,
+                    text: 'Входные данные',
+                    icon: Icons.article_outlined,
+                    hintText: 'Пример: Текст письма, тема, код, описание идеи',
+                  ),
+                  SizedBox(height: 20),
+                  CategoryUniversal(
+                    key: _CategoryMenuKey,
+                    text: 'Категория',
+                    textCategory: selectedCategory,
+                    icon:
+                        _isMenuOpenCategory
+                            ? Icons.arrow_drop_up
+                            : Icons.arrow_drop_down,
+                    onTap: () => _showDropdownMenu(context),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 20),
             showSnackBarInsteadOfButton
-                ? Center(
-                  child: Text(
-                    snackBarMessage,
-                    textAlign: TextAlign.center,
-                    style: myStyle,
-                  ),
+                ? Text(
+                  snackBarMessage,
+                  textAlign: TextAlign.center,
+                  style: myStyle,
                 )
-                : ButtonPromptGeneration(
-                  text: 'Сгенерировать промпт',
-                  onTap: promptGeneration,
+                : IntrinsicWidth(
+                  child: ButtonPromptGeneration(
+                    text: 'Сгенерировать промпт',
+                    onTap: promptGeneration,
+                  ),
                 ),
+            SizedBox(height: 30),
           ],
         ),
       ),

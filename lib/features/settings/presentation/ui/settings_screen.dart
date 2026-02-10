@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gpt_prompt_builder/constants/settings_button_name.dart';
-import 'package:gpt_prompt_builder/features/account/presentation/ui/account_screen.dart';
 import 'package:gpt_prompt_builder/features/settings/domain/models/settings_button_models.dart';
 import 'package:gpt_prompt_builder/features/settings/presentation/ui/widgets/button_settings.dart';
 import 'package:gpt_prompt_builder/shared/widgets/app_bar/app_bar_universal.dart';
@@ -22,10 +22,7 @@ class SettingsScreen extends StatelessWidget {
             onTap: () {
               switch (settingsButtonName[index].type) {
                 case SettingsType.profile:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AccountScreen()),
-                  );
+                  context.go('/account');
                   break;
 
                 case SettingsType.upgrade:
